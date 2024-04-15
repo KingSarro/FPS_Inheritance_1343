@@ -4,9 +4,11 @@ using UnityEngine;
 
 public abstract class State: MonoBehaviour{
 
-    StateCore sCore;
+    protected StateCore sCore;
     public bool isComplete = false;
-    //public bool isOnCooldown = false;
+    protected float distanceFromTarget;
+    [SerializeField] protected float targetDistanceThreshold;
+    protected Vector3 targetLocation;
 
     public virtual void Enter_State(){}
     public virtual void Update_State(){}

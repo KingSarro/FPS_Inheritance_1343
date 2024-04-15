@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774b4b0fb57e10047a4bcae602c39a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isComplete: 0
+  targetThreshold: 0.5
+  cooldownTimerDuration: 2.5
 --- !u!1 &304789613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,7 +1920,7 @@ GameObject:
   - component: {fileID: 1723601615}
   - component: {fileID: 1723601624}
   m_Layer: 0
-  m_Name: Jeff_Dummy
+  m_Name: Jeff_The_Killer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1936,6 +1939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
   wanderRange: 3
   sightRange: 5
   attackRange: 3
@@ -2324,6 +2328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f28a3a7b3b6444e9b9af9ac6f2fd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
 --- !u!1 &1871054894
 GameObject:
   m_ObjectHideFlags: 0
