@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NPC_State_Manager : StateCore{
+public class NPC_States : StateCore{
 
     [Header("NPC States")] //Displays a header on the inspector
     [SerializeField] State_NPC_Attack attack;
