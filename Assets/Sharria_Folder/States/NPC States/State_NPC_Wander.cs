@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 
 public class State_NPC_Wander : State{
+    //[Header("Jeff References")]
+    //----Jeff References----//
+    
+    protected NPC_Data jeffData;
     //----Location Values----//
     public Vector3 startPosition;
     public Vector3 currentPosition;

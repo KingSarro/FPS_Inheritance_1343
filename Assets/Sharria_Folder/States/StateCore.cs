@@ -11,6 +11,7 @@ public abstract class StateCore : MonoBehaviour{
     public Collider capCollider;
     protected static StateMachine sMachine;
     public NavMeshAgent agent;
+    public float moveSpeed;
 
     public void Setup_States(){
         //Creates a new instance of the state machine
