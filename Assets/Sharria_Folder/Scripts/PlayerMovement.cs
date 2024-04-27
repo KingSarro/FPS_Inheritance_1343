@@ -11,8 +11,8 @@ public class PlayerWalk : MonoBehaviour{
     private Rigidbody rb = null;
     //Creates a Vector3 to be used in player Walk and defaults it to zero
     private Vector3 moveValue = Vector3.zero;
-    //Made a float to adjust player speed
-    [SerializeField] float moveSpeed = 5f;
+    
+    
 
 //Calls the Awake method to save objects/components to their refernce holder
     private void Awake(){
@@ -20,6 +20,8 @@ public class PlayerWalk : MonoBehaviour{
         input = new InputManager();
         //Saves the rigidbody component's access to rb
         rb = GetComponent<Rigidbody>();
+
+        PlayerData.playerTransform = transform;
     }//Closes Awake
     
     private void OnEnable(){
@@ -44,7 +46,9 @@ public class PlayerWalk : MonoBehaviour{
     //==Because we want to make sure rigid body calculations are going to be correct, were doing a fixed update
     private void FixedUpdate(){//Fixed Update already uses time.DeltaTime
         //Sets the Walk of the objects
-        rb.velocity = moveValue * moveSpeed;
+        rb.velocity = moveValue * PlayerData.moveSpeed;
+
+        PlayerData.playerTransform = transform;
     }//closes fixed update
 
     //Checks if the assaigned input is being triggered and traking it's value
