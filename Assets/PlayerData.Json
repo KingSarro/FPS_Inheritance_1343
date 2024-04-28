@@ -1,1 +1,10 @@
-{"playerHealth":100,"playerMaxHealth":100,"playerAmmo":50,"playerMaxAmmo":100,"playerTransform":{"instanceID":25116},"moveSpeed":5.0}
+{
+    "playerHealth": 71,
+    "playerMaxHealth": 100,
+    "playerAmmo": 50,
+    "playerMaxAmmo": 100,
+    "playerTransform": {
+        "instanceID": 25116
+    },
+    "moveSpeed": 5.0
+}

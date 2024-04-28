@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour{
         sd.playerTransform = PlayerData.playerTransform;
         sd.moveSpeed = PlayerData.moveSpeed;
         //Converts the objects of SaveData to a Json format
-        string jsonText = JsonUtility.ToJson(sd);
+        string jsonText = JsonUtility.ToJson(sd, true);
         Debug.Log("Json file was saved");
         Debug.Log(jsonText);
         //Saves it to the Json file
