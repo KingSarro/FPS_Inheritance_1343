@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour{
     public static InputManager menuInputs = null;
     public static InputManager cheatInputs = null;
     public Canvas statCanvas;
     public Canvas pauseMenuCanvas;
+
+    private bool isPaused = false;
 
     // Start is called before the first frame update
     void Awake(){
@@ -31,7 +34,9 @@ public class GameManager : MonoBehaviour{
         //This turns on the input manager 
         menuInputs.Enable();
         cheatInputs.Enable();
-
+        //Menu Inputs being set
+        menuInputs.MenuInputs.PauseMenu.performed += callPauseMenu;
+        //Cheat Inputs being setup
         cheatInputs.Cheats.ReduceAmmo.performed += reduceAmmo;
         cheatInputs.Cheats.ReduceHealth.performed += reduceHealth;
         cheatInputs.Cheats.AddAmmo.performed += addAmmo;
@@ -41,11 +46,41 @@ public class GameManager : MonoBehaviour{
         //This turns on the input manager 
         menuInputs.Disable();
         cheatInputs.Disable();
-
+        //Menu Inputs being set
+        menuInputs.MenuInputs.PauseMenu.performed -= callPauseMenu;
+        //Cheat Inputs being set
         cheatInputs.Cheats.ReduceAmmo.performed -= reduceAmmo;
         cheatInputs.Cheats.ReduceHealth.performed -= reduceHealth;
         cheatInputs.Cheats.AddAmmo.performed -= addAmmo;
         cheatInputs.Cheats.AddHealth.performed -= addHealth;
+    }
+
+    //============Save/Load Methods==============//
+    private void callPauseMenu(InputAction.CallbackContext value){
+        //Switches the current setting of the menu tot he opposite
+        isPaused = !isPaused;
+        //Loads the pause menu over the current scene
+        if(isPaused){
+            SceneManager.LoadScene("Pause_Menu", LoadSceneMode.Additive);
+        }
+        else{
+            SceneManager.UnloadSceneAsync("Pause_Menu");
+        }
+        
+    }
+    private void SaveGame(){
+        SaveData sd = new SaveData();
+        //saves all the values we want to save to the SaveData Class
+        sd.playerHealth = PlayerData.playerHealth;
+        sd.playerAmmo = PlayerData.playerAmmo;
+        sd.playerMaxHealth = PlayerData.playerMaxHealth;
+        sd.playerMaxAmmo = PlayerData.playerMaxAmmo;
+        sd.playerTransform = PlayerData.playerTransform;
+        sd.moveSpeed = PlayerData.moveSpeed;
+        //Converts the objects of SaveData to a Json File
+        string jsonText = JsonUtility.ToJson(sd);
+        Debug.Log("Json file was saved");
+        Debug.Log(jsonText);
     }
 
     //============Cheat Methods=============//

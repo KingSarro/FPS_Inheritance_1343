@@ -15,11 +15,11 @@ public class PlayerData{
 
 }
 
-public class Save{
+public class SaveData{
     public int playerHealth;
     public int playerMaxHealth;
     public int playerAmmo;
     public int playerMaxAmmo;
+    public Transform playerTransform;
     public float moveSpeed;
-    public Vector3 playerPosition;
 }
