@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -12,12 +10,11 @@ public class PlayerData{
     public static Transform playerTransform;
     //Made a float to adjust player speed
     public static float moveSpeed = 5f;
-
-
 }
 
 public class SaveData{
-    public readonly string dataPath = Application.dataPath + Path.AltDirectorySeparatorChar + "PlayerData.Json"; //This cannot be modified
+    //C:\Users\[userName]\[Location]\[projectname]\Assets
+    public readonly string dataPath = Application.dataPath + Path.AltDirectorySeparatorChar + "PlayerSaveData" + Path.AltDirectorySeparatorChar + "PlayerData.Json"; //This cannot be modified
     public int playerHealth;
     public int playerMaxHealth;
     public int playerAmmo;

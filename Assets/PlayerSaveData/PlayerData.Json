@@ -1,7 +1,7 @@
 {
-    "playerHealth": 71,
+    "playerHealth": 62,
     "playerMaxHealth": 100,
-    "playerAmmo": 50,
+    "playerAmmo": 30,
     "playerMaxAmmo": 100,
     "playerTransform": {
         "instanceID": 25116
