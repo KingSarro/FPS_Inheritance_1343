@@ -34,25 +34,14 @@ public class GameManager : MonoBehaviour{
         //This turns on the input manager 
         menuInputs.Enable();
         cheatInputs.Enable();
-        //Menu Inputs being set
-        menuInputs.MenuInputs.PauseMenu.performed += callPauseMenu;
-        //Cheat Inputs being setup
-        cheatInputs.Cheats.ReduceAmmo.performed += reduceAmmo;
-        cheatInputs.Cheats.ReduceHealth.performed += reduceHealth;
-        cheatInputs.Cheats.AddAmmo.performed += addAmmo;
-        cheatInputs.Cheats.AddHealth.performed += addHealth;
+        SetupEnabledInputActions();
+        
     }
     private void OnDisable(){
         //This turns on the input manager 
         menuInputs.Disable();
         cheatInputs.Disable();
-        //Menu Inputs being set
-        menuInputs.MenuInputs.PauseMenu.performed -= callPauseMenu;
-        //Cheat Inputs being set
-        cheatInputs.Cheats.ReduceAmmo.performed -= reduceAmmo;
-        cheatInputs.Cheats.ReduceHealth.performed -= reduceHealth;
-        cheatInputs.Cheats.AddAmmo.performed -= addAmmo;
-        cheatInputs.Cheats.AddHealth.performed -= addHealth;
+        SetupDisabledInputActions();
     }
 
     //============Save/Load Methods==============//
@@ -62,9 +51,21 @@ public class GameManager : MonoBehaviour{
         //Loads the pause menu over the current scene
         if(isPaused){
             SceneManager.LoadScene("Pause_Menu", LoadSceneMode.Additive);
+            //Finds all instances of type Canvas
+            var foundCanvasObjects = FindObjectsOfType<Canvas>();
+            //Looks through all instances of Canvases in foundCanvasObjects
+            foreach(var c in foundCanvasObjects){
+                //If the name of the canvas is "Canvas_PauseMenu"... save it to
+                if(c.name == "Canvas_PauseMenu"){
+                    //...save it to pauseMenuCanvas
+                    pauseMenuCanvas = c;
+                }
+            }//ends foreach-loop
         }
         else{
             SceneManager.UnloadSceneAsync("Pause_Menu");
+            //Resets the pause menu to be null again
+            pauseMenuCanvas = null;
         }
         
     }
@@ -89,36 +90,76 @@ public class GameManager : MonoBehaviour{
     Child 0: HealthText
     Child 1: AmmoText
     */
-
+    //======---------Setup Methods----------========//
+    private void SetupEnabledInputActions(){
+        //Menu Inputs being set
+        menuInputs.MenuInputs.PauseMenu.performed += callPauseMenu;
+        //Cheat Inputs on performed being setup
+        cheatInputs.Cheats.ReduceAmmo.performed += ReduceAmmoPerformed;
+        cheatInputs.Cheats.ReduceHealth.performed += ReduceHealthPerformed;
+        cheatInputs.Cheats.AddAmmo.performed += AddAmmoPerformed;
+        cheatInputs.Cheats.AddHealth.performed += AddHealthPerformed;
+        //Cheat Inputs on cancelled being setup
+        cheatInputs.Cheats.ReduceAmmo.canceled += ReduceAmmoCancelled;
+        cheatInputs.Cheats.ReduceHealth.canceled += ReduceHealthCancelled;
+        cheatInputs.Cheats.AddAmmo.canceled += AddAmmoCancelled;
+        cheatInputs.Cheats.AddHealth.canceled += AddHealthCancelled;
+    }
+    private void SetupDisabledInputActions(){
+        //Menu Inputs being set
+        menuInputs.MenuInputs.PauseMenu.performed -= callPauseMenu;
+        //Cheat Inputs on performed being setup
+        cheatInputs.Cheats.ReduceAmmo.performed -= ReduceAmmoPerformed;
+        cheatInputs.Cheats.ReduceHealth.performed -= ReduceHealthPerformed;
+        cheatInputs.Cheats.AddAmmo.performed -= AddAmmoPerformed;
+        cheatInputs.Cheats.AddHealth.performed -= AddHealthPerformed;
+        //Cheat Inputs on cancelled being setup
+        cheatInputs.Cheats.ReduceAmmo.canceled -= ReduceAmmoCancelled;
+        cheatInputs.Cheats.ReduceHealth.canceled -= ReduceHealthCancelled;
+        cheatInputs.Cheats.AddAmmo.canceled -= AddAmmoCancelled;
+        cheatInputs.Cheats.AddHealth.canceled -= AddHealthCancelled;
+    }
+    //=======---------OnPerformed--------=======// (This will do calculations for certain actions [Pressing the button])
     //-----------Health cheats---------//
-    private void addHealth(InputAction.CallbackContext value){
+    private void AddHealthPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
         PlayerData.playerHealth += 1;
-        //Calls the function fo update the text of the player
-        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerHealth);
     }
-    private void reduceHealth(InputAction.CallbackContext value){
+    private void ReduceHealthPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
         PlayerData.playerHealth -= 1;
-        //Calls the function fo update the text of the player
-        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerHealth);
     }
     //----------Ammo cheats-----------//
-    private void addAmmo(InputAction.CallbackContext value){
+    private void AddAmmoPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
         PlayerData.playerAmmo += 1;
-        //Calls the function fo update the text of the player
-        var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerAmmo);
     }
-    private void reduceAmmo(InputAction.CallbackContext value){
+    private void ReduceAmmoPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
         PlayerData.playerAmmo -= 1;
-        //Calls the function fo update the text of the player
+    }
+    //**************************************************************************************************
+    //=========----------On Cancelled---------=========// (This will display the changes after the action has happened [When the button is released])
+    //-----------Health cheats---------//
+    private void AddHealthCancelled(InputAction.CallbackContext value){
+        //Calls the function for update the text of the player
+        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
+        statText.UpdateHealthText(PlayerData.playerHealth);
+    }
+    private void ReduceHealthCancelled(InputAction.CallbackContext value){
+        //Calls the function for update the text of the player
+        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
+        statText.UpdateHealthText(PlayerData.playerHealth);
+    }
+    //----------Ammo cheats-----------//
+    private void AddAmmoCancelled(InputAction.CallbackContext value){
+        //Calls the function for update the text of the player
         var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
         statText.UpdateAmmoText(PlayerData.playerAmmo);
     }
-    
+    private void ReduceAmmoCancelled(InputAction.CallbackContext value){
+        //Calls the function for update the text of the player
+        var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
+        statText.UpdateAmmoText(PlayerData.playerAmmo);
+    }
 }
