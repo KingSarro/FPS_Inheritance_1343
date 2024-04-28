@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class PlayerData{
@@ -16,6 +17,7 @@ public class PlayerData{
 }
 
 public class SaveData{
+    public readonly string dataPath = Application.dataPath + Path.AltDirectorySeparatorChar + "PlayerData.Json"; //This cannot be modified
     public int playerHealth;
     public int playerMaxHealth;
     public int playerAmmo;

@@ -107,6 +107,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Load_Cheat",
+                    "type": "Button",
+                    "id": "909ef285-d30b-4dfc-8ade-f73200942b7a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Save_Cheat",
+                    "type": "Button",
+                    "id": "4d3fe83d-9d40-4a8b-9a6a-aa07350cd4aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -118,6 +136,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a726ee6-3418-4683-9532-ac4444d31562",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Load_Cheat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4867f5b5-7644-43b3-b106-fbcf2685d783",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save_Cheat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

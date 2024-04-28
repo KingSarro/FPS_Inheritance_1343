@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Sharria_TestingScene/Sharria_TestingScene.unity
+    guid: 8b8326d93d6fd8d4c842532c913f9f92
+  - enabled: 1
+    path: Assets/Scenes/Sharria_TestingScene/Pause_Menu.unity
+    guid: 8ae1ce60ef04fb24d8f1ea52d5da4013
   m_configObjects: {}

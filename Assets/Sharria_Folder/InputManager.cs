@@ -129,6 +129,24 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Load_Cheat"",
+                    ""type"": ""Button"",
+                    ""id"": ""909ef285-d30b-4dfc-8ade-f73200942b7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Save_Cheat"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d3fe83d-9d40-4a8b-9a6a-aa07350cd4aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -140,6 +158,28 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a726ee6-3418-4683-9532-ac4444d31562"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load_Cheat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4867f5b5-7644-43b3-b106-fbcf2685d783"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save_Cheat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -242,6 +282,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         // MenuInputs
         m_MenuInputs = asset.FindActionMap("MenuInputs", throwIfNotFound: true);
         m_MenuInputs_PauseMenu = m_MenuInputs.FindAction("PauseMenu", throwIfNotFound: true);
+        m_MenuInputs_Load_Cheat = m_MenuInputs.FindAction("Load_Cheat", throwIfNotFound: true);
+        m_MenuInputs_Save_Cheat = m_MenuInputs.FindAction("Save_Cheat", throwIfNotFound: true);
         // Cheats
         m_Cheats = asset.FindActionMap("Cheats", throwIfNotFound: true);
         m_Cheats_AddAmmo = m_Cheats.FindAction("AddAmmo", throwIfNotFound: true);
@@ -356,11 +398,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_MenuInputs;
     private List<IMenuInputsActions> m_MenuInputsActionsCallbackInterfaces = new List<IMenuInputsActions>();
     private readonly InputAction m_MenuInputs_PauseMenu;
+    private readonly InputAction m_MenuInputs_Load_Cheat;
+    private readonly InputAction m_MenuInputs_Save_Cheat;
     public struct MenuInputsActions
     {
         private @InputManager m_Wrapper;
         public MenuInputsActions(@InputManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @PauseMenu => m_Wrapper.m_MenuInputs_PauseMenu;
+        public InputAction @Load_Cheat => m_Wrapper.m_MenuInputs_Load_Cheat;
+        public InputAction @Save_Cheat => m_Wrapper.m_MenuInputs_Save_Cheat;
         public InputActionMap Get() { return m_Wrapper.m_MenuInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -373,6 +419,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @PauseMenu.started += instance.OnPauseMenu;
             @PauseMenu.performed += instance.OnPauseMenu;
             @PauseMenu.canceled += instance.OnPauseMenu;
+            @Load_Cheat.started += instance.OnLoad_Cheat;
+            @Load_Cheat.performed += instance.OnLoad_Cheat;
+            @Load_Cheat.canceled += instance.OnLoad_Cheat;
+            @Save_Cheat.started += instance.OnSave_Cheat;
+            @Save_Cheat.performed += instance.OnSave_Cheat;
+            @Save_Cheat.canceled += instance.OnSave_Cheat;
         }
 
         private void UnregisterCallbacks(IMenuInputsActions instance)
@@ -380,6 +432,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @PauseMenu.started -= instance.OnPauseMenu;
             @PauseMenu.performed -= instance.OnPauseMenu;
             @PauseMenu.canceled -= instance.OnPauseMenu;
+            @Load_Cheat.started -= instance.OnLoad_Cheat;
+            @Load_Cheat.performed -= instance.OnLoad_Cheat;
+            @Load_Cheat.canceled -= instance.OnLoad_Cheat;
+            @Save_Cheat.started -= instance.OnSave_Cheat;
+            @Save_Cheat.performed -= instance.OnSave_Cheat;
+            @Save_Cheat.canceled -= instance.OnSave_Cheat;
         }
 
         public void RemoveCallbacks(IMenuInputsActions instance)
@@ -474,6 +532,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     public interface IMenuInputsActions
     {
         void OnPauseMenu(InputAction.CallbackContext context);
+        void OnLoad_Cheat(InputAction.CallbackContext context);
+        void OnSave_Cheat(InputAction.CallbackContext context);
     }
     public interface ICheatsActions
     {
