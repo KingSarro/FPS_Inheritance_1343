@@ -94,6 +94,122 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "MenuInputs",
+            "id": "0205e454-297d-4ce3-92c8-92c6f116aff8",
+            "actions": [
+                {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "edb52f6e-6dc6-4e6e-ab40-af1de8288c20",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d44f6243-d544-4cf6-a770-bbacacf34c9b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cheats",
+            "id": "5e9e0dc7-797c-43ce-a600-11d21ea528a7",
+            "actions": [
+                {
+                    "name": "AddAmmo",
+                    "type": "Button",
+                    "id": "efc06fb3-40c0-4b9b-8dd3-5a6b89598bd0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddHealth",
+                    "type": "Button",
+                    "id": "52318b0d-0ac9-481e-8335-cfcc8799975b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReduceAmmo",
+                    "type": "Button",
+                    "id": "d6387054-d075-4fe6-81cd-9dba65f3aca8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReduceHealth",
+                    "type": "Button",
+                    "id": "07b31856-ffc5-4ba3-ac74-c1d7260496aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e21b003b-9efa-4fd2-8fda-27ce0ed0499a",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddAmmo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddbfbdb4-71b6-422a-b4cf-eeec72d640cb",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddHealth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4047cea-caa9-4ee1-9a85-656171a74222",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReduceAmmo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6083dd5-b78b-451d-bc4a-1748ebe562df",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReduceHealth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

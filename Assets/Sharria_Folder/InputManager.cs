@@ -116,6 +116,122 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""MenuInputs"",
+            ""id"": ""0205e454-297d-4ce3-92c8-92c6f116aff8"",
+            ""actions"": [
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""edb52f6e-6dc6-4e6e-ab40-af1de8288c20"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d44f6243-d544-4cf6-a770-bbacacf34c9b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Cheats"",
+            ""id"": ""5e9e0dc7-797c-43ce-a600-11d21ea528a7"",
+            ""actions"": [
+                {
+                    ""name"": ""AddAmmo"",
+                    ""type"": ""Button"",
+                    ""id"": ""efc06fb3-40c0-4b9b-8dd3-5a6b89598bd0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AddHealth"",
+                    ""type"": ""Button"",
+                    ""id"": ""52318b0d-0ac9-481e-8335-cfcc8799975b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReduceAmmo"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6387054-d075-4fe6-81cd-9dba65f3aca8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReduceHealth"",
+                    ""type"": ""Button"",
+                    ""id"": ""07b31856-ffc5-4ba3-ac74-c1d7260496aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e21b003b-9efa-4fd2-8fda-27ce0ed0499a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddAmmo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddbfbdb4-71b6-422a-b4cf-eeec72d640cb"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddHealth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4047cea-caa9-4ee1-9a85-656171a74222"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReduceAmmo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6083dd5-b78b-451d-bc4a-1748ebe562df"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReduceHealth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -123,6 +239,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
+        // MenuInputs
+        m_MenuInputs = asset.FindActionMap("MenuInputs", throwIfNotFound: true);
+        m_MenuInputs_PauseMenu = m_MenuInputs.FindAction("PauseMenu", throwIfNotFound: true);
+        // Cheats
+        m_Cheats = asset.FindActionMap("Cheats", throwIfNotFound: true);
+        m_Cheats_AddAmmo = m_Cheats.FindAction("AddAmmo", throwIfNotFound: true);
+        m_Cheats_AddHealth = m_Cheats.FindAction("AddHealth", throwIfNotFound: true);
+        m_Cheats_ReduceAmmo = m_Cheats.FindAction("ReduceAmmo", throwIfNotFound: true);
+        m_Cheats_ReduceHealth = m_Cheats.FindAction("ReduceHealth", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -226,8 +351,135 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // MenuInputs
+    private readonly InputActionMap m_MenuInputs;
+    private List<IMenuInputsActions> m_MenuInputsActionsCallbackInterfaces = new List<IMenuInputsActions>();
+    private readonly InputAction m_MenuInputs_PauseMenu;
+    public struct MenuInputsActions
+    {
+        private @InputManager m_Wrapper;
+        public MenuInputsActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseMenu => m_Wrapper.m_MenuInputs_PauseMenu;
+        public InputActionMap Get() { return m_Wrapper.m_MenuInputs; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuInputsActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuInputsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuInputsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuInputsActionsCallbackInterfaces.Add(instance);
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
+        }
+
+        private void UnregisterCallbacks(IMenuInputsActions instance)
+        {
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
+        }
+
+        public void RemoveCallbacks(IMenuInputsActions instance)
+        {
+            if (m_Wrapper.m_MenuInputsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuInputsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuInputsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuInputsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuInputsActions @MenuInputs => new MenuInputsActions(this);
+
+    // Cheats
+    private readonly InputActionMap m_Cheats;
+    private List<ICheatsActions> m_CheatsActionsCallbackInterfaces = new List<ICheatsActions>();
+    private readonly InputAction m_Cheats_AddAmmo;
+    private readonly InputAction m_Cheats_AddHealth;
+    private readonly InputAction m_Cheats_ReduceAmmo;
+    private readonly InputAction m_Cheats_ReduceHealth;
+    public struct CheatsActions
+    {
+        private @InputManager m_Wrapper;
+        public CheatsActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AddAmmo => m_Wrapper.m_Cheats_AddAmmo;
+        public InputAction @AddHealth => m_Wrapper.m_Cheats_AddHealth;
+        public InputAction @ReduceAmmo => m_Wrapper.m_Cheats_ReduceAmmo;
+        public InputAction @ReduceHealth => m_Wrapper.m_Cheats_ReduceHealth;
+        public InputActionMap Get() { return m_Wrapper.m_Cheats; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CheatsActions set) { return set.Get(); }
+        public void AddCallbacks(ICheatsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CheatsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CheatsActionsCallbackInterfaces.Add(instance);
+            @AddAmmo.started += instance.OnAddAmmo;
+            @AddAmmo.performed += instance.OnAddAmmo;
+            @AddAmmo.canceled += instance.OnAddAmmo;
+            @AddHealth.started += instance.OnAddHealth;
+            @AddHealth.performed += instance.OnAddHealth;
+            @AddHealth.canceled += instance.OnAddHealth;
+            @ReduceAmmo.started += instance.OnReduceAmmo;
+            @ReduceAmmo.performed += instance.OnReduceAmmo;
+            @ReduceAmmo.canceled += instance.OnReduceAmmo;
+            @ReduceHealth.started += instance.OnReduceHealth;
+            @ReduceHealth.performed += instance.OnReduceHealth;
+            @ReduceHealth.canceled += instance.OnReduceHealth;
+        }
+
+        private void UnregisterCallbacks(ICheatsActions instance)
+        {
+            @AddAmmo.started -= instance.OnAddAmmo;
+            @AddAmmo.performed -= instance.OnAddAmmo;
+            @AddAmmo.canceled -= instance.OnAddAmmo;
+            @AddHealth.started -= instance.OnAddHealth;
+            @AddHealth.performed -= instance.OnAddHealth;
+            @AddHealth.canceled -= instance.OnAddHealth;
+            @ReduceAmmo.started -= instance.OnReduceAmmo;
+            @ReduceAmmo.performed -= instance.OnReduceAmmo;
+            @ReduceAmmo.canceled -= instance.OnReduceAmmo;
+            @ReduceHealth.started -= instance.OnReduceHealth;
+            @ReduceHealth.performed -= instance.OnReduceHealth;
+            @ReduceHealth.canceled -= instance.OnReduceHealth;
+        }
+
+        public void RemoveCallbacks(ICheatsActions instance)
+        {
+            if (m_Wrapper.m_CheatsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICheatsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CheatsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CheatsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CheatsActions @Cheats => new CheatsActions(this);
     public interface IPlayerActions
     {
         void OnWalk(InputAction.CallbackContext context);
+    }
+    public interface IMenuInputsActions
+    {
+        void OnPauseMenu(InputAction.CallbackContext context);
+    }
+    public interface ICheatsActions
+    {
+        void OnAddAmmo(InputAction.CallbackContext context);
+        void OnAddHealth(InputAction.CallbackContext context);
+        void OnReduceAmmo(InputAction.CallbackContext context);
+        void OnReduceHealth(InputAction.CallbackContext context);
     }
 }
