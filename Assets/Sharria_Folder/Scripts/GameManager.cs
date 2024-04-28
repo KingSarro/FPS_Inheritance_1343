@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour{
         cheatInputs.Enable();
 
         cheatInputs.Cheats.ReduceAmmo.performed += reduceAmmo;
+        cheatInputs.Cheats.ReduceHealth.performed += reduceHealth;
+        cheatInputs.Cheats.AddAmmo.performed += addAmmo;
+        cheatInputs.Cheats.AddHealth.performed += addHealth;
     }
     private void OnDisable(){
         //This turns on the input manager 
@@ -40,6 +43,9 @@ public class GameManager : MonoBehaviour{
         cheatInputs.Disable();
 
         cheatInputs.Cheats.ReduceAmmo.performed -= reduceAmmo;
+        cheatInputs.Cheats.ReduceHealth.performed -= reduceHealth;
+        cheatInputs.Cheats.AddAmmo.performed -= addAmmo;
+        cheatInputs.Cheats.AddHealth.performed -= addHealth;
     }
 
     //============Cheat Methods=============//
@@ -49,6 +55,29 @@ public class GameManager : MonoBehaviour{
     Child 1: AmmoText
     */
 
+    //-----------Health cheats---------//
+    private void addHealth(InputAction.CallbackContext value){
+        //changes the value of playerAmmo
+        PlayerData.playerHealth += 1;
+        //Calls the function fo update the text of the player
+        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
+        statText.UpdateAmmoText(PlayerData.playerHealth);
+    }
+    private void reduceHealth(InputAction.CallbackContext value){
+        //changes the value of playerAmmo
+        PlayerData.playerHealth -= 1;
+        //Calls the function fo update the text of the player
+        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
+        statText.UpdateAmmoText(PlayerData.playerHealth);
+    }
+    //----------Ammo cheats-----------//
+    private void addAmmo(InputAction.CallbackContext value){
+        //changes the value of playerAmmo
+        PlayerData.playerAmmo += 1;
+        //Calls the function fo update the text of the player
+        var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
+        statText.UpdateAmmoText(PlayerData.playerAmmo);
+    }
     private void reduceAmmo(InputAction.CallbackContext value){
         //changes the value of playerAmmo
         PlayerData.playerAmmo -= 1;
@@ -56,4 +85,5 @@ public class GameManager : MonoBehaviour{
         var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
         statText.UpdateAmmoText(PlayerData.playerAmmo);
     }
+    
 }

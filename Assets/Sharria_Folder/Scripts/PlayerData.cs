@@ -12,5 +12,14 @@ public class PlayerData{
     //Made a float to adjust player speed
     public static float moveSpeed = 5f;
 
-    
+
+}
+
+public class Save{
+    public int playerHealth;
+    public int playerMaxHealth;
+    public int playerAmmo;
+    public int playerMaxAmmo;
+    public float moveSpeed;
+    public Vector3 playerPosition;
 }
