@@ -275,6 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a19c851e48da9449b4fc2509f1543e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: eca4eedab5d338a4e8ed270a82d37c3e, type: 2}
   statCanvas: {fileID: 0}
   pauseMenuCanvas: {fileID: 0}
 --- !u!4 &394273425
@@ -769,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283fcaaa91c065147ab6674d77fde6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: eca4eedab5d338a4e8ed270a82d37c3e, type: 2}
 --- !u!43 &940754304
 Mesh:
   m_ObjectHideFlags: 0
@@ -2438,6 +2440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6772a265d47eb48a91e8420f17a976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: eca4eedab5d338a4e8ed270a82d37c3e, type: 2}
 --- !u!54 &1677317799
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2612,6 +2615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283fcaaa91c065147ab6674d77fde6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: eca4eedab5d338a4e8ed270a82d37c3e, type: 2}
 --- !u!1 &1723601614
 GameObject:
   m_ObjectHideFlags: 0
