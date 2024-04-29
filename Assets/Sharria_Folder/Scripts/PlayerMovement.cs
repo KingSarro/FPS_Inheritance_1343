@@ -4,7 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerWalk : MonoBehaviour{
+public class PlayerMovement : MonoBehaviour{
+    [SerializeField] PlayerData playerData;
     //Makes a refernce to the InputManager Class
     public static InputManager input = null;
     //Makes a reference to the current object's rigidbody
@@ -21,7 +22,8 @@ public class PlayerWalk : MonoBehaviour{
         //Saves the rigidbody component's access to rb
         rb = GetComponent<Rigidbody>();
 
-        PlayerData.playerTransform = transform;
+        //playerData.playerRef.transform.position = rb.gameObject.transform.position;
+        //playerData.playerRef.transform.rotation = rb.gameObject.transform.rotation;
     }//Closes Awake
     
     private void OnEnable(){
@@ -46,9 +48,11 @@ public class PlayerWalk : MonoBehaviour{
     //==Because we want to make sure rigid body calculations are going to be correct, were doing a fixed update
     private void FixedUpdate(){//Fixed Update already uses time.DeltaTime
         //Sets the Walk of the objects
-        rb.velocity = moveValue * PlayerData.moveSpeed;
+        rb.velocity = moveValue * playerData.moveSpeed;
 
-        PlayerData.playerTransform = transform;
+        //playerData.playerRef.transform.position = rb.gameObject.transform.position;
+        //playerData.playerRef.transform.rotation = rb.gameObject.transform.rotation;
+
     }//closes fixed update
 
     //Checks if the assaigned input is being triggered and traking it's value

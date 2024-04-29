@@ -3,6 +3,7 @@ using TMPro;
 using System;
 
 public class TextChanger : MonoBehaviour{
+    [SerializeField] private PlayerData playerData;
     private TMP_Text text;
     private void Awake(){
         text = GetComponent<TMP_Text>();
@@ -10,10 +11,11 @@ public class TextChanger : MonoBehaviour{
 
 
     public void UpdateHealthText(int newHealth){
-        text.text = "Health: " + newHealth.ToString() + "/" + PlayerData.playerMaxHealth.ToString();
+        var pData = 
+        text.text = "Health: " + newHealth.ToString() + "/" + playerData.playerMaxHealth.ToString();
     }
 
     public void UpdateAmmoText(int newAmmo){
-        text.text = "Ammo: " + newAmmo.ToString() + "/" + PlayerData.playerMaxAmmo.ToString();
+        text.text = "Ammo: " + newAmmo.ToString() + "/" + playerData.playerMaxAmmo.ToString();
     }
 }

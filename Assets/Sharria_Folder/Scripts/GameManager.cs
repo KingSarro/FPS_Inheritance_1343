@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour{
+    public PlayerData playerData;
     public static InputManager menuInputs = null;
     public static InputManager cheatInputs = null;
     public Canvas statCanvas;
@@ -25,9 +23,9 @@ public class GameManager : MonoBehaviour{
     private void Start(){
         //Get Access to the textChanger on the canvas components
         var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
-        statText.UpdateHealthText(PlayerData.playerHealth);
+        statText.UpdateHealthText(playerData.playerHealth);
         statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerAmmo);
+        statText.UpdateAmmoText(playerData.playerAmmo);
         
     }
 
@@ -75,21 +73,53 @@ public class GameManager : MonoBehaviour{
     private void SaveGame(){
         SaveData sd = new SaveData();
         //saves all the values we want to save to the SaveData Class
-        sd.playerHealth = PlayerData.playerHealth;
-        sd.playerAmmo = PlayerData.playerAmmo;
-        sd.playerMaxHealth = PlayerData.playerMaxHealth;
-        sd.playerMaxAmmo = PlayerData.playerMaxAmmo;
-        sd.playerTransform = PlayerData.playerTransform;
-        sd.moveSpeed = PlayerData.moveSpeed;
+        sd.playerHealth = playerData.playerHealth;
+        sd.playerAmmo = playerData.playerAmmo;
+        sd.playerMaxHealth = playerData.playerMaxHealth;
+        sd.playerMaxAmmo = playerData.playerMaxAmmo;
+        //sd.playerRef = playerData.playerRef;
+        sd.moveSpeed = playerData.moveSpeed;
         //Converts the objects of SaveData to a Json format
         string jsonText = JsonUtility.ToJson(sd, true);
         Debug.Log("Json file was saved");
         Debug.Log(jsonText);
         //Saves it to the Json file
-        File.WriteAllText(sd.dataPath, jsonText);
+        File.WriteAllText(SaveData.dataPath, jsonText);
     }
     private void LoadGame(){
+        string jsonText = File.ReadAllText(SaveData.dataPath);
+        SaveData sd = JsonUtility.FromJson<SaveData>(jsonText);
 
+        Debug.Log("Json file was loaded");
+        Debug.Log(jsonText);
+
+        playerData.playerHealth = sd.playerHealth;
+        playerData.playerAmmo = sd.playerAmmo;
+        playerData.playerMaxHealth = sd.playerMaxHealth;
+        playerData.playerMaxAmmo = sd.playerMaxAmmo;
+        //Player Aspects
+        //playerData.playerRef.transform.position = sd.playerRef.transform.position;
+        //playerData.playerRef.transform.rotation = sd.playerRef.transform.rotation;
+        playerData.moveSpeed = sd.moveSpeed;
+
+        ResetUIElements(); //Reset UI elements
+    }
+
+    public void ResetUIElements(){
+        //Calls the function for update the health text of the player
+        var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
+        statText.UpdateHealthText(playerData.playerHealth);
+
+        //Calls the function for update the ammo text of the player
+        statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
+        statText.UpdateAmmoText(playerData.playerAmmo);
+
+        //Resets the player transform
+        //var player = FindObjectOfType<PlayerMovement>().gameObject;
+        //playerData.playerRef.transform.position = player.transform.position;
+
+        //player.transform.position = playerData.playerRef.transform.position;
+        //player.transform.rotation = playerData.playerRef.transform.rotation;
     }
 
 
@@ -146,20 +176,20 @@ public class GameManager : MonoBehaviour{
     //-----------Health cheats---------//
     private void AddHealthPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
-        PlayerData.playerHealth += 1;
+        playerData.playerHealth += 1;
     }
     private void ReduceHealthPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
-        PlayerData.playerHealth -= 1;
+        playerData.playerHealth -= 1;
     }
     //----------Ammo cheats-----------//
     private void AddAmmoPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
-        PlayerData.playerAmmo += 1;
+        playerData.playerAmmo += 1;
     }
     private void ReduceAmmoPerformed(InputAction.CallbackContext value){
         //changes the value of playerAmmo
-        PlayerData.playerAmmo -= 1;
+        playerData.playerAmmo -= 1;
     }
     //------------Save/Load Data-----------//
     private void SaveGamePerformed(InputAction.CallbackContext value){
@@ -175,23 +205,23 @@ public class GameManager : MonoBehaviour{
     private void AddHealthCancelled(InputAction.CallbackContext value){
         //Calls the function for update the text of the player
         var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
-        statText.UpdateHealthText(PlayerData.playerHealth);
+        statText.UpdateHealthText(playerData.playerHealth);
     }
     private void ReduceHealthCancelled(InputAction.CallbackContext value){
         //Calls the function for update the text of the player
         var statText = statCanvas.transform.GetChild(0).GetComponent<TextChanger>(); //Accesses child 0 [Health Text]
-        statText.UpdateHealthText(PlayerData.playerHealth);
+        statText.UpdateHealthText(playerData.playerHealth);
     }
     //----------Ammo cheats-----------//
     private void AddAmmoCancelled(InputAction.CallbackContext value){
         //Calls the function for update the text of the player
         var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerAmmo);
+        statText.UpdateAmmoText(playerData.playerAmmo);
     }
     private void ReduceAmmoCancelled(InputAction.CallbackContext value){
         //Calls the function for update the text of the player
         var statText = statCanvas.transform.GetChild(1).GetComponent<TextChanger>(); //Accesses child 1 [Ammo Text]
-        statText.UpdateAmmoText(PlayerData.playerAmmo);
+        statText.UpdateAmmoText(playerData.playerAmmo);
     }
     //----------save/Load data-------------//
 
